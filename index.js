@@ -3,6 +3,26 @@
 const {logError}    = require('@popovmp/micro-logger')
 const {requestForm} = require('@popovmp/request-service')
 
+/**
+ * @typedef {Object} ModifyOptions
+ *
+ * @property {boolean} [multi]
+ * @property {boolean} [skipSave]
+ */
+
+/**
+ * @typedef {Object} InsertOptions
+ *
+ * @property {boolean} [skipSave]
+ */
+
+/**
+ * Gets a DBil client
+ *
+ * @param {string} url
+ * @param {string} secret
+ * @param {string} dbName
+ */
 function getDbiler(url, secret, dbName)
 {
 	/**
@@ -36,16 +56,18 @@ function getDbiler(url, secret, dbName)
 	/**
 	 * Inserts document in the DB.
 	 *
-	 * @param {Object} doc - document to be inserted in DB.
+	 * @param {Object}        doc - document to be inserted in DB.
+	 * @param {InsertOptions} options
 	 *
 	 * @param {function(id: string|undefined)} callback.
 	 */
-	function insert(doc, callback)
+	function insert(doc, options, callback)
 	{
 		const data = {
-			secret: secret,
-			dbName: dbName,
-			doc   : JSON.stringify(doc),
+			secret : secret,
+			dbName : dbName,
+			doc    : JSON.stringify(doc),
+			options: JSON.stringify(options),
 		}
 
 		requestForm(url + '/insert', data, {},
@@ -89,8 +111,10 @@ function getDbiler(url, secret, dbName)
 
 	/**
 	 * Finds one object in DB.
+	 *
 	 * @param {Object} query
 	 * @param {Object} projection
+	 *
 	 * @param {function(doc: Object|undefined)} callback
 	 */
 	function findOne(query, projection, callback)
@@ -117,6 +141,7 @@ function getDbiler(url, secret, dbName)
 	 * Counts objects in DB.
 	 *
 	 * @param {Object} query
+	 *
 	 * @param {function(count: number)} callback
 	 */
 	function count(query, callback)
@@ -141,9 +166,10 @@ function getDbiler(url, secret, dbName)
 	/**
 	 * Updates documents in DB.
 	 *
-	 * @param {Object} query
-	 * @param {Object} update
-	 * @param {Object} options
+	 * @param {Object}        query
+	 * @param {Object}        update
+	 * @param {ModifyOptions} options
+	 *
 	 * @param {function(numUpdated: number)} callback
 	 */
 	function update(query, update, options, callback)
@@ -170,8 +196,9 @@ function getDbiler(url, secret, dbName)
 	/**
 	 * Removes documents in DB.
 	 *
-	 * @param {Object} query
-	 * @param {Object} options
+	 * @param {Object}        query
+	 * @param {ModifyOptions} options
+	 *
 	 * @param {function(numRemoved: number)} callback
 	 */
 	function remove(query, options, callback)
