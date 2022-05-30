@@ -1,0 +1,29 @@
+{
+  "name": "@popovmp/dbiler",
+  "description": "DBil http client",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Popov MP <info@forexsb.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/popovmp/dbiler",
+  "dependencies": {
+    "@popovmp/micro-logger": "^1.7.0",
+    "@popovmp/request-service": "^5.0.0"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PopovMP/dbiler.git"
+  },
+  "keywords": [
+    "document",
+    "database",
+    "client"
+  ],
+  "bugs": {
+    "url": "https://github.com/popovmp/dbiler/issues"
+  }
+}
